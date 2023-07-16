@@ -4,3 +4,10 @@ spring:
     url: jdbc:mysql://localhost:3306/gameple_db?serverTimezone=Asia/Seoul
     username: root
     password: root
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+    hibernate:
+      ddl-auto: update
