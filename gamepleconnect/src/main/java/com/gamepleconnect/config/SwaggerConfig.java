@@ -18,10 +18,10 @@ public class SwaggerConfig {
     }
 
     @Bean
-    public GroupedOpenApi content() {
+    public GroupedOpenApi cs() {
         return GroupedOpenApi.builder()
-                .group("Gameple - User Content")
-                .pathsToMatch("/api/content/**")
+                .group("Gameple - Customer service")
+                .pathsToMatch("/api/cs/**")
                 .build();
     }
 
