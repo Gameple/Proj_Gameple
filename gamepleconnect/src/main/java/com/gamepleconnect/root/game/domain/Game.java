@@ -1,4 +1,4 @@
-package com.gamepleconnect.game.entity;
+package com.gamepleconnect.root.game.domain;
 
 import lombok.Builder;
 import lombok.Getter;
