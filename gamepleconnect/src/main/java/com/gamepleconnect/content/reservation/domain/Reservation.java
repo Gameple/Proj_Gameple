@@ -1,7 +1,9 @@
 package com.gamepleconnect.content.reservation.domain;
 
+import com.gamepleconnect.content.reservation.domain.DeviceOS;
 import com.gamepleconnect.root.game.domain.Game;
 import com.gamepleconnect.root.language.domain.Language;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
@@ -23,9 +25,6 @@ public class Reservation {
 
     @Column(name = "user_email")
     private String email;
-
-    @Column(name = "user_phone")
-    private String phoneNum;
 
     @Column(name = "created_ip")
     private String createdIp;
@@ -52,4 +51,15 @@ public class Reservation {
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date createDate;
+
+    @Builder
+    public Reservation(String email, String createdIp, DeviceOS deviceOS, String deviceModel, Game game, Language language, boolean promotionAgree) {
+        this.email = email;
+        this.createdIp = createdIp;
+        this.deviceOS = deviceOS;
+        this.deviceModel = deviceModel;
+        this.game = game;
+        this.language = language;
+        this.promotionAgree = promotionAgree;
+    }
 }
