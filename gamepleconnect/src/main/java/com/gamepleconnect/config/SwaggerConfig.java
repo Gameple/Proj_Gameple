@@ -13,7 +13,7 @@ public class SwaggerConfig {
     public GroupedOpenApi auth() {
         return GroupedOpenApi.builder()
                 .group("Gameple - Auth")
-                .pathsToMatch("/api/auth/**")
+                .pathsToMatch("/auth/**")
                 .build();
     }
 
@@ -21,7 +21,7 @@ public class SwaggerConfig {
     public GroupedOpenApi content() {
         return GroupedOpenApi.builder()
                 .group("Gameple - User Content")
-                .pathsToMatch("/api/content/**")
+                .pathsToMatch("/content/**")
                 .build();
     }
 

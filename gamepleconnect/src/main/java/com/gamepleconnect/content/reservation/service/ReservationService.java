@@ -1,11 +1,14 @@
 package com.gamepleconnect.content.reservation.service;
 
-import com.gamepleconnect.common.response.ApiResponse;
+import com.gamepleconnect.common.code.StatusCode;
+import com.gamepleconnect.common.response.ApiResponseDto;
+import com.gamepleconnect.common.security.AES256;
 import com.gamepleconnect.common.util.CommonUtil;
 import com.gamepleconnect.content.reservation.domain.DeviceOS;
 import com.gamepleconnect.content.reservation.domain.Reservation;
+import com.gamepleconnect.content.reservation.exception.DuplicatedEmailException;
 import com.gamepleconnect.content.reservation.repository.ReservationRepository;
-import com.gamepleconnect.content.reservation.request.ReservationRequestDto;
+import com.gamepleconnect.content.reservation.dto.ReservationRequestDto;
 import com.gamepleconnect.root.game.domain.Game;
 import com.gamepleconnect.root.game.exception.GameNotFoundException;
 import com.gamepleconnect.root.game.repository.GameRepository;
@@ -27,18 +30,24 @@ public class ReservationService {
 
     private final LanguageRepository languageRepository;
 
-    public ApiResponse preRegister(ReservationRequestDto requestDto) {
+    private final AES256 aes256;
+
+    public ApiResponseDto preRegister(ReservationRequestDto requestDto) throws Exception {
 
         Game game = gameRepository.findByGameCode(requestDto.getGameCode())
                 .orElseThrow(GameNotFoundException::new);
 
-        Language language = languageRepository.findByLangAlias(requestDto.getLang())
+        Language language = languageRepository.findByLangAlias(requestDto.getLang().toUpperCase())
                 .orElseThrow(LanguageNotFoundException::new);
 
+        if(reservationRepository.existsByEmail(aes256.encrypt(requestDto.getEmail()), game)) {
+            throw new DuplicatedEmailException();
+        }
+
         Reservation reservation = Reservation.builder()
-                .email(requestDto.getEmail())
-                .createdIp(CommonUtil.getIp())
-                .deviceOS(DeviceOS.valueOf(requestDto.getDeviceOs()))
+                .email(aes256.encrypt(requestDto.getEmail()))
+                .createdIp(aes256.encrypt(CommonUtil.getIp()))
+                .deviceOS(DeviceOS.valueOfOrNull(requestDto.getDeviceOs()))
                 .deviceModel(requestDto.getDeviceModel())
                 .promotionAgree(requestDto.isPromotionAgree())
                 .game(game)
@@ -47,6 +56,9 @@ public class ReservationService {
 
         reservationRepository.save(reservation);
 
-        return new ApiResponse();
+        return ApiResponseDto.builder()
+                .statusCode(StatusCode.SUCCESS.getCode())
+                .data(requestDto)
+                .build();
     }
 }
