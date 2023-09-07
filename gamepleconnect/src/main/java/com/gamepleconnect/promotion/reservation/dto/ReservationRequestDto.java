@@ -1,6 +1,7 @@
 package com.gamepleconnect.promotion.reservation.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
 import lombok.Getter;
 
 import javax.validation.constraints.Email;
@@ -32,4 +33,14 @@ public class ReservationRequestDto {
     @Schema(description = "마케팅 수신 동의" , example = "true")
     @NotBlank()
     private boolean promotionAgree;
+
+    @Builder
+    public ReservationRequestDto(String email, Long gameCode, String lang, String deviceOs, String deviceModel, boolean promotionAgree) {
+        this.email = email;
+        this.gameCode = gameCode;
+        this.lang = lang;
+        this.deviceOs = deviceOs;
+        this.deviceModel = deviceModel;
+        this.promotionAgree = promotionAgree;
+    }
 }
