@@ -3,7 +3,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/gameple_db?serverTimezone=Asia/Seoul
     username: root
-    password: root
+    password: kim1011205
   jpa:
     properties:
       hibernate:
