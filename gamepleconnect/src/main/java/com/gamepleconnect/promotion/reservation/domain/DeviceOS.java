@@ -1,4 +1,4 @@
-package com.gamepleconnect.content.reservation.domain;
+package com.gamepleconnect.promotion.reservation.domain;
 
 import java.util.HashMap;
 import java.util.Map;

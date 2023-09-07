@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 
 @Data
-public class ApiResponseDto {
+public class ApiResponse {
 
     @Schema(description = "상태코드" , example = "1")
     private String statusCode;
@@ -14,7 +14,7 @@ public class ApiResponseDto {
     private Object data;
 
     @Builder
-    public ApiResponseDto(String statusCode, Object data) {
+    public ApiResponse(String statusCode, Object data) {
         this.statusCode = statusCode;
         this.data = data;
     }

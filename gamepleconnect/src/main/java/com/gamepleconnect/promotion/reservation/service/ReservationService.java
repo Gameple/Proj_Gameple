@@ -1,14 +1,14 @@
-package com.gamepleconnect.content.reservation.service;
+package com.gamepleconnect.promotion.reservation.service;
 
 import com.gamepleconnect.common.code.StatusCode;
-import com.gamepleconnect.common.response.ApiResponseDto;
+import com.gamepleconnect.common.response.ApiResponse;
 import com.gamepleconnect.common.security.AES256;
 import com.gamepleconnect.common.util.CommonUtil;
-import com.gamepleconnect.content.reservation.domain.DeviceOS;
-import com.gamepleconnect.content.reservation.domain.Reservation;
-import com.gamepleconnect.content.reservation.exception.DuplicatedEmailException;
-import com.gamepleconnect.content.reservation.repository.ReservationRepository;
-import com.gamepleconnect.content.reservation.dto.ReservationRequestDto;
+import com.gamepleconnect.promotion.reservation.domain.DeviceOS;
+import com.gamepleconnect.promotion.reservation.domain.Reservation;
+import com.gamepleconnect.promotion.reservation.exception.DuplicatedEmailException;
+import com.gamepleconnect.promotion.reservation.repository.ReservationRepository;
+import com.gamepleconnect.promotion.reservation.dto.ReservationRequestDto;
 import com.gamepleconnect.root.game.domain.Game;
 import com.gamepleconnect.root.game.exception.GameNotFoundException;
 import com.gamepleconnect.root.game.repository.GameRepository;
@@ -32,12 +32,12 @@ public class ReservationService {
 
     private final AES256 aes256;
 
-    public ApiResponseDto preRegister(ReservationRequestDto requestDto) throws Exception {
+    public ApiResponse preRegister(ReservationRequestDto requestDto) throws Exception {
 
         Game game = gameRepository.findByGameCode(requestDto.getGameCode())
                 .orElseThrow(GameNotFoundException::new);
 
-        Language language = languageRepository.findByLangAlias(requestDto.getLang().toUpperCase())
+        Language language = languageRepository.findByLangAlias(requestDto.getLang().toLowerCase())
                 .orElseThrow(LanguageNotFoundException::new);
 
         if(reservationRepository.existsByEmail(aes256.encrypt(requestDto.getEmail()), game)) {
@@ -56,9 +56,11 @@ public class ReservationService {
 
         reservationRepository.save(reservation);
 
-        return ApiResponseDto.builder()
+        log.info("RESERVATION INFO SAVE : {}", reservation.toString());
+
+        return ApiResponse.builder()
                 .statusCode(StatusCode.SUCCESS.getCode())
-                .data(requestDto)
+                .data(null)
                 .build();
     }
 }
