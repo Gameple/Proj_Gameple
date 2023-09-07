@@ -1,5 +1,6 @@
 package com.gamepleconnect.root.language.domain;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -20,4 +21,10 @@ public class Language {
 
     @Column(name = "language_alias", nullable = false)
     private String langAlias;
+
+    @Builder
+    public Language(Long langCode, String langAlias) {
+        this.langCode = langCode;
+        this.langAlias = langAlias;
+    }
 }
