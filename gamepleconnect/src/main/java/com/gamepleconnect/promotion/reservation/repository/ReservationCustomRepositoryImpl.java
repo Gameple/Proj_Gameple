@@ -1,7 +1,7 @@
-package com.gamepleconnect.content.reservation.repository;
+package com.gamepleconnect.promotion.reservation.repository;
 
-import static com.gamepleconnect.content.reservation.domain.QReservation.reservation;
-import com.gamepleconnect.content.reservation.dto.ReservationRequestDto;
+import static com.gamepleconnect.promotion.reservation.domain.QReservation.reservation;
+
 import com.gamepleconnect.root.game.domain.Game;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 

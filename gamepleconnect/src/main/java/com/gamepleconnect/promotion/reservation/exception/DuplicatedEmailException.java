@@ -1,4 +1,4 @@
-package com.gamepleconnect.content.reservation.exception;
+package com.gamepleconnect.promotion.reservation.exception;
 
 import com.gamepleconnect.common.code.StatusCode;
 

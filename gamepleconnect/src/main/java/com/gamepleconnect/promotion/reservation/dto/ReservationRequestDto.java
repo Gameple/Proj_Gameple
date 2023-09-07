@@ -1,4 +1,4 @@
-package com.gamepleconnect.content.reservation.dto;
+package com.gamepleconnect.promotion.reservation.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
