@@ -1,6 +1,5 @@
-package com.gamepleconnect.content.reservation.repository;
+package com.gamepleconnect.promotion.reservation.repository;
 
-import com.gamepleconnect.content.reservation.dto.ReservationRequestDto;
 import com.gamepleconnect.root.game.domain.Game;
 
 public interface ReservationCustomRepository {
