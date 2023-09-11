@@ -18,6 +18,7 @@ public class ExceptionController {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(BindException.class)
+    @ResponseBody
     public ApiResponse invalidRequestHandler(BindException e) {
         return ApiResponse.builder()
                 .statusCode(StatusCode.BAD_REQUEST.getCode())

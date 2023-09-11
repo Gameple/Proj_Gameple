@@ -41,9 +41,8 @@ public class Reservation {
     @JoinColumn(name = "game_code")
     private Game game;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "lang_code")
-    private Language language;
+    @Column(name = "user_region")
+    private String region;
 
     @Column(name = "promotion_agree")
     @ColumnDefault("false")
@@ -54,13 +53,13 @@ public class Reservation {
     private Date createDate;
 
     @Builder
-    public Reservation(String email, String createdIp, DeviceOS deviceOS, String deviceModel, Game game, Language language, boolean promotionAgree) {
+    public Reservation(String email, String createdIp, DeviceOS deviceOS, String deviceModel, Game game, String region, boolean promotionAgree) {
         this.email = email;
         this.createdIp = createdIp;
         this.deviceOS = deviceOS;
         this.deviceModel = deviceModel;
         this.game = game;
-        this.language = language;
+        this.region = region;
         this.promotionAgree = promotionAgree;
     }
 }

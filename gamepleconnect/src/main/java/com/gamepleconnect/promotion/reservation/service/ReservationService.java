@@ -40,9 +40,6 @@ public class ReservationService {
         Game game = gameRepository.findByGameCode(requestDto.getGameCode())
                 .orElseThrow(GameNotFoundException::new);
 
-        Language language = languageRepository.findByLangAlias(requestDto.getLang().toLowerCase())
-                .orElseThrow(LanguageNotFoundException::new);
-
         if(reservationRepository.existsByEmail(aes256.encrypt(requestDto.getEmail()), game)) {
             throw new DuplicatedEmailException();
         }
@@ -54,7 +51,7 @@ public class ReservationService {
                 .deviceModel(requestDto.getDeviceModel())
                 .promotionAgree(requestDto.isPromotionAgree())
                 .game(game)
-                .language(language)
+                .region(requestDto.getRegion())
                 .build();
 
         reservationRepository.save(reservation);
