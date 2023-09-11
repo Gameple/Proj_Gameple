@@ -20,9 +20,9 @@ public class ReservationRequestDto {
     @NotNull()
     private Long gameCode;
 
-    @Schema(description = "언어" , example = "EN")
+    @Schema(description = "국가" , example = "KR")
     @NotBlank()
-    private String lang;
+    private String region;
 
     @Schema(description = "디바이스 OS" , example = "AOS")
     private String deviceOs;
@@ -31,14 +31,14 @@ public class ReservationRequestDto {
     private String deviceModel;
 
     @Schema(description = "마케팅 수신 동의" , example = "true")
-    @NotBlank()
+    @NotNull()
     private boolean promotionAgree;
 
     @Builder
-    public ReservationRequestDto(String email, Long gameCode, String lang, String deviceOs, String deviceModel, boolean promotionAgree) {
+    public ReservationRequestDto(String email, Long gameCode, String region, String deviceOs, String deviceModel, boolean promotionAgree) {
         this.email = email;
         this.gameCode = gameCode;
-        this.lang = lang;
+        this.region = region;
         this.deviceOs = deviceOs;
         this.deviceModel = deviceModel;
         this.promotionAgree = promotionAgree;

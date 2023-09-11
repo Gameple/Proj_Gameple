@@ -10,9 +10,7 @@ import com.gamepleconnect.root.game.domain.Game;
 import com.gamepleconnect.root.game.repository.GameRepository;
 import com.gamepleconnect.root.language.domain.Language;
 import com.gamepleconnect.root.language.repository.LanguageRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,6 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @AutoConfigureMockMvc
 @SpringBootTest
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ReservationControllerTest {
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
@@ -45,20 +44,20 @@ class ReservationControllerTest {
     @Autowired
     GameRepository gameRepository;
 
-    @Autowired
-    LanguageRepository languageRepository;
 
     @Autowired
     private ReservationRepository reservationRepository;
 
     @BeforeEach
-    void init() {
-        saveDummyGameEntity();
-        saveDummyLanguage();
+    @Order(1)
+    void cleanRepository() {
         reservationRepository.deleteAll();
+        gameRepository.deleteAll();
     }
 
-    void saveDummyGameEntity() {
+    @BeforeEach
+    @Order(2)
+    void saveDummyData() {
         Game game = Game.builder()
                 .gameCode(1L)
                 .gameAlias("GAME - 1")
@@ -67,14 +66,6 @@ class ReservationControllerTest {
         gameRepository.save(game);
     }
 
-    void saveDummyLanguage() {
-        Language language = Language.builder()
-                .langCode(1L)
-                .langAlias("ko")
-                .build();
-
-        languageRepository.save(language);
-    }
 
     @Test
     @DisplayName("사전예약 정보 등록 - 성공")
@@ -83,7 +74,7 @@ class ReservationControllerTest {
         ReservationRequestDto requestDto = ReservationRequestDto.builder()
                 .email("test@test.com")
                 .gameCode(1L)
-                .lang("ko")
+                .region("KR")
                 .deviceModel("iPhone 22")
                 .deviceOs("IOS")
                 .promotionAgree(false)
@@ -108,7 +99,7 @@ class ReservationControllerTest {
         ReservationRequestDto requestDto = ReservationRequestDto.builder()
                 .email("test@test.com")
                 .gameCode(2L)
-                .lang("ko")
+                .region("KR")
                 .deviceModel("iPhone 22")
                 .deviceOs("IOS")
                 .promotionAgree(false)
@@ -127,38 +118,13 @@ class ReservationControllerTest {
     }
 
     @Test
-    @DisplayName("사전예약 정보 등록 - 실패 - 존재하지 않는 언어 정보")
-    void test2() throws Exception {
-
-        ReservationRequestDto requestDto = ReservationRequestDto.builder()
-                .email("test@test.com")
-                .gameCode(1L)
-                .lang("en")
-                .deviceModel("iPhone 22")
-                .deviceOs("IOS")
-                .promotionAgree(false)
-                .build();
-
-        String json = objectMapper.writeValueAsString(requestDto);
-
-        mockMvc.perform(post("/promotion/pre-register")
-                        .contentType(APPLICATION_JSON)
-                        .content(json)
-                )
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.statusCode").value("-6"))
-                .andExpect(jsonPath("$.data").isEmpty())
-                .andDo(print());
-    }
-
-    @Test
     @DisplayName("사전예약 정보 등록 - 실패 - 이미 동록된 이메일 정보")
     void test3() throws Exception {
 
         ReservationRequestDto requestDto = ReservationRequestDto.builder()
                 .email("test@test.com")
                 .gameCode(1L)
-                .lang("ko")
+                .region("KR")
                 .deviceModel("iPhone 22")
                 .deviceOs("IOS")
                 .promotionAgree(false)
