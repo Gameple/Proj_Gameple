@@ -8,14 +8,10 @@ import com.gamepleconnect.root.game.exception.GameNotFoundException;
 import com.gamepleconnect.root.game.repository.GameRepository;
 import com.gamepleconnect.promotion.reservation.dto.ReservationRequestDto;
 import com.gamepleconnect.promotion.reservation.repository.ReservationRepository;
-import com.gamepleconnect.root.language.domain.Language;
-import com.gamepleconnect.root.language.exception.LanguageNotFoundException;
-import com.gamepleconnect.root.language.repository.LanguageRepository;
+
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import javax.transaction.Transactional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
