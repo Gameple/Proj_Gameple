@@ -14,7 +14,7 @@ public class IpGeolocationApiResponse {
     public static IpGeolocationApiResponse defaultResponse(String ip) {
         return builder()
                 .ip(ip)
-                .country("KR")
+                .country("US")
                 .build();
     }
 }

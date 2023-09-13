@@ -44,7 +44,6 @@ class ReservationControllerTest {
     @Autowired
     GameRepository gameRepository;
 
-
     @Autowired
     private ReservationRepository reservationRepository;
 
