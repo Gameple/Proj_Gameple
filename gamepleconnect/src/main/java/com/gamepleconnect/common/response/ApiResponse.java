@@ -4,8 +4,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class ApiResponse {
+public class ApiResponse implements Serializable {
 
     @Schema(description = "상태코드" , example = "1")
     private String statusCode;
