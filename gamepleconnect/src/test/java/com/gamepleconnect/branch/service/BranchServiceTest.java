@@ -9,10 +9,12 @@ import com.gamepleconnect.promotion.reservation.dto.ReservationRequestDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.core.AutoConfigureCache;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@AutoConfigureCache
 @SpringBootTest
 class BranchServiceTest {
 
