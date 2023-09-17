@@ -31,9 +31,6 @@ class ReservationServiceTest {
     @Autowired
     GameRepository gameRepository;
 
-    @Autowired
-    AES256 aes256;
-
     @BeforeEach
     @Order(1)
     void cleanRepository() {
@@ -69,7 +66,7 @@ class ReservationServiceTest {
 
         assertEquals(1L, reservationRepository.count());
         Reservation reservation = reservationRepository.findAll().get(0);
-        assertEquals(aes256.encrypt("test@test.com"), reservation.getEmail());
+        assertEquals(AES256.encrypt("test@test.com"), reservation.getEmail());
     }
 
     @Test
