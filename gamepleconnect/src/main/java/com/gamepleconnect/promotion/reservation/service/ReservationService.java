@@ -30,23 +30,19 @@ public class ReservationService {
 
     private final GameRepository gameRepository;
 
-    private final LanguageRepository languageRepository;
-
-    private final AES256 aes256;
-
     @Transactional
     public ApiResponse preRegister(ReservationRequestDto requestDto) throws Exception {
 
         Game game = gameRepository.findByGameCode(requestDto.getGameCode())
                 .orElseThrow(GameNotFoundException::new);
 
-        if(reservationRepository.existsByEmail(aes256.encrypt(requestDto.getEmail()), game)) {
+        if(reservationRepository.existsByEmail(AES256.encrypt(requestDto.getEmail()), game)) {
             throw new DuplicatedEmailException();
         }
 
         Reservation reservation = Reservation.builder()
-                .email(aes256.encrypt(requestDto.getEmail()))
-                .createdIp(aes256.encrypt(CommonUtil.getIp()))
+                .email(AES256.encrypt(requestDto.getEmail()))
+                .createdIp(AES256.encrypt(CommonUtil.getIp()))
                 .deviceOS(DeviceOS.valueOfOrNull(requestDto.getDeviceOs()))
                 .deviceModel(requestDto.getDeviceModel())
                 .promotionAgree(requestDto.isPromotionAgree())

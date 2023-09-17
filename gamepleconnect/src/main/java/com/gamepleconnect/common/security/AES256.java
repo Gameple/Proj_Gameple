@@ -1,20 +1,17 @@
 package com.gamepleconnect.common.security;
 
-import org.springframework.stereotype.Component;
-
 import java.util.Base64;
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-@Component
 public class AES256 {
 
     public static String alg = "AES/CBC/PKCS5Padding";
-    private final String key = "01234567890123456789012345678901";
-    private final String iv = key.substring(0, 16); // 16byte
+    private static final String key = "01234567890123456789012345678901";
+    private static final String iv = key.substring(0, 16);
 
-    public String encrypt(String text) throws Exception {
+    public static String encrypt(String text) throws Exception {
         Cipher cipher = Cipher.getInstance(alg);
         SecretKeySpec keySpec = new SecretKeySpec(key.getBytes(), "AES");
         IvParameterSpec ivParamSpec = new IvParameterSpec(iv.getBytes());
@@ -24,7 +21,7 @@ public class AES256 {
         return Base64.getEncoder().encodeToString(encrypted);
     }
 
-    public String decrypt(String cipherText) throws Exception {
+    public static String decrypt(String cipherText) throws Exception {
         Cipher cipher = Cipher.getInstance(alg);
         SecretKeySpec keySpec = new SecretKeySpec(key.getBytes(), "AES");
         IvParameterSpec ivParamSpec = new IvParameterSpec(iv.getBytes());
