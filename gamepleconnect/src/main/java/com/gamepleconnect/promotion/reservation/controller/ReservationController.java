@@ -24,11 +24,7 @@ public class ReservationController {
 
     private final ReservationService reservationService;
 
-    @Operation(summary = "사전예약 등록 API", description = "사전예약 정보를 등록하는 API입니다.")
-    @ApiResponses({
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "등록 성공 케이스", content = @Content(schema = @Schema(implementation = ApiResponse.class))),
-            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "예외 발생 케이스", content = @Content(schema = @Schema(implementation = ApiResponse.class))),
-    })
+    @Operation(summary = "사전예약 등록 API", description = "사전예약 정보를 등록하는 API")
     @PostMapping("/pre-register")
     public ApiResponse preRegister(@RequestBody @Valid ReservationRequestDto requestDto) throws Exception {
         return reservationService.preRegister(requestDto);
