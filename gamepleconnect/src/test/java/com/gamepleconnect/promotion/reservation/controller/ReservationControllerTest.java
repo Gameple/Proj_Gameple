@@ -76,7 +76,6 @@ class ReservationControllerTest {
                 .email("test@test.com")
                 .gameCode(1L)
                 .region("KR")
-                .deviceModel("iPhone 22")
                 .deviceOs("IOS")
                 .promotionAgree(false)
                 .build();
@@ -89,6 +88,7 @@ class ReservationControllerTest {
                 )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.statusCode").value("1"))
+                .andExpect(jsonPath("$.message").value("OK"))
                 .andExpect(jsonPath("$.data").isEmpty())
                 .andDo(print());
     }
@@ -101,7 +101,6 @@ class ReservationControllerTest {
                 .email("test@test.com")
                 .gameCode(2L)
                 .region("KR")
-                .deviceModel("iPhone 22")
                 .deviceOs("IOS")
                 .promotionAgree(false)
                 .build();
@@ -114,19 +113,19 @@ class ReservationControllerTest {
                 )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.statusCode").value("-5"))
+                .andExpect(jsonPath("$.message").value("GAME_NOT_FOUND"))
                 .andExpect(jsonPath("$.data").isEmpty())
                 .andDo(print());
     }
 
     @Test
     @DisplayName("사전예약 정보 등록 - 실패 - 이미 동록된 이메일 정보")
-    void test3() throws Exception {
+    void test2() throws Exception {
 
         ReservationRequestDto requestDto = ReservationRequestDto.builder()
                 .email("test@test.com")
                 .gameCode(1L)
                 .region("KR")
-                .deviceModel("iPhone 22")
                 .deviceOs("IOS")
                 .promotionAgree(false)
                 .build();
@@ -148,6 +147,30 @@ class ReservationControllerTest {
                 )
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.statusCode").value("-7"))
+                .andExpect(jsonPath("$.message").value("ALREADY_EXISTS_EMAIL"))
+                .andExpect(jsonPath("$.data").isEmpty())
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("사전예약 정보 등록 - 실패 - BAD REQUEST")
+    void test3() throws Exception {
+
+        ReservationRequestDto requestDto = ReservationRequestDto.builder()
+                .gameCode(2L)
+                .deviceOs("IOS")
+                .promotionAgree(false)
+                .build();
+
+        String json = objectMapper.writeValueAsString(requestDto);
+
+        mockMvc.perform(post("/promotion/pre-register")
+                        .contentType(APPLICATION_JSON)
+                        .content(json)
+                )
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.statusCode").value("-1"))
+                .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
                 .andExpect(jsonPath("$.data").isEmpty())
                 .andDo(print());
     }
