@@ -43,7 +43,8 @@ public class BranchService {
         }
 
         return ApiResponse.builder()
-                .statusCode(StatusCode.SUCCESS.getCode())
+                .statusCode(StatusCode.SUCCESS.getStatusCode())
+                .message(StatusCode.SUCCESS.getMessage())
                 .data(ipGeolocationApiResponse)
                 .build();
     }

@@ -9,15 +9,19 @@ import java.io.Serializable;
 @Data
 public class ApiResponse implements Serializable {
 
-    @Schema(description = "상태코드" , example = "1")
+    @Schema(description = "서버 정의 상태코드" , example = "1")
     private String statusCode;
 
-    @Schema(description = "API 응답 데이터")
+    @Schema(description = "서버 정의 메세지" , example = "1")
+    private String message;
+
+    @Schema(description = "데이터")
     private Object data;
 
     @Builder
-    public ApiResponse(String statusCode, Object data) {
+    public ApiResponse(String statusCode, String message, Object data) {
         this.statusCode = statusCode;
+        this.message = message;
         this.data = data;
     }
 }
