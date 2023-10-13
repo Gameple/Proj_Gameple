@@ -57,7 +57,6 @@ class ReservationServiceTest {
                 .email("test@test.com")
                 .gameCode(1L)
                 .region("KR")
-                .deviceModel("iPhone 22")
                 .deviceOs("IOS")
                 .promotionAgree(false)
                 .build();

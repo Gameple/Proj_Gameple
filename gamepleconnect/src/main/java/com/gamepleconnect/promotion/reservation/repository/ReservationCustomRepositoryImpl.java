@@ -20,7 +20,7 @@ public class ReservationCustomRepositoryImpl implements ReservationCustomReposit
                 .from(reservation)
                 .where(reservation.game.eq(game))
                 .where(reservation.email.eq(email))
-                .fetchOne();
+                .fetchFirst();
 
         return fetchOne != null;
     }
