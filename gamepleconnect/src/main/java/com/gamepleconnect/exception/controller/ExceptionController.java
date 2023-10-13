@@ -21,7 +21,8 @@ public class ExceptionController {
     @ResponseBody
     public ApiResponse invalidRequestHandler(BindException e) {
         return ApiResponse.builder()
-                .statusCode(StatusCode.BAD_REQUEST.getCode())
+                .statusCode(StatusCode.BAD_REQUEST.getStatusCode())
+                .message(StatusCode.BAD_REQUEST.getMessage())
                 .data(null)
                 .build();
     }
@@ -31,7 +32,8 @@ public class ExceptionController {
     @ResponseBody
     public ApiResponse invaildRequestHandler(MethodArgumentNotValidException e) {
         return ApiResponse.builder()
-                .statusCode(StatusCode.BAD_REQUEST.getCode())
+                .statusCode(StatusCode.BAD_REQUEST.getStatusCode())
+                .message(StatusCode.BAD_REQUEST.getMessage())
                 .data(null)
                 .build();
     }
@@ -42,6 +44,7 @@ public class ExceptionController {
     public ApiResponse invaildRequestHandler(GameNotFoundException e) {
         return ApiResponse.builder()
                 .statusCode(e.getMessage())
+                .message(e.getCustomMessage())
                 .data(null)
                 .build();
     }
@@ -52,6 +55,7 @@ public class ExceptionController {
     public ApiResponse invaildRequestHandler(LanguageNotFoundException e) {
         return ApiResponse.builder()
                 .statusCode(e.getMessage())
+                .message(e.getCustomMessage())
                 .data(null)
                 .build();
     }
@@ -62,6 +66,7 @@ public class ExceptionController {
     public ApiResponse invaildRequestHandler(DuplicatedEmailException e) {
         return ApiResponse.builder()
                 .statusCode(e.getMessage())
+                .message(e.getCustomMessage())
                 .data(null)
                 .build();
     }

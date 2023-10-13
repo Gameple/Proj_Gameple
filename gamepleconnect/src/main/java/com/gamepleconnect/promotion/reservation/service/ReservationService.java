@@ -55,7 +55,8 @@ public class ReservationService {
         log.info("RESERVATION INFO SAVE : {}", reservation.toString());
 
         return ApiResponse.builder()
-                .statusCode(StatusCode.SUCCESS.getCode())
+                .statusCode(StatusCode.SUCCESS.getStatusCode())
+                .message(StatusCode.SUCCESS.getMessage())
                 .data(null)
                 .build();
     }
