@@ -1,7 +1,11 @@
 package com.gamepleconnect.branch.service;
 
+import com.gamepleconnect.branch.domain.CountryRestrictions;
 import com.gamepleconnect.branch.dto.request.CountryCodeGetRequest;
+import com.gamepleconnect.branch.dto.request.CountryRestrictionsRequest;
+import com.gamepleconnect.branch.dto.response.CountryRestrictionsResponse;
 import com.gamepleconnect.branch.dto.response.IpGeolocationApiResponse;
+import com.gamepleconnect.branch.repository.restrictions.CountryRestrictionsRepository;
 import com.gamepleconnect.common.code.StatusCode;
 import com.gamepleconnect.common.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +17,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -22,6 +29,8 @@ public class BranchService {
     private String ipGeoLocationApiUri;
 
     private final RestTemplate restTemplate;
+
+    private final CountryRestrictionsRepository countryRestrictionsRepository;
 
     @Cacheable(value="branchGetCountryCodeCache", key = "#request")
     public ApiResponse getCountryCodeByIp(CountryCodeGetRequest request) {
@@ -46,6 +55,21 @@ public class BranchService {
                 .statusCode(StatusCode.SUCCESS.getStatusCode())
                 .message(StatusCode.SUCCESS.getMessage())
                 .data(ipGeolocationApiResponse)
+                .build();
+    }
+
+    @Cacheable(value="branchGetCountryRestrictionsCache", key = "#request")
+    public ApiResponse getRestrictionsByCountry(CountryRestrictionsRequest request) {
+
+        log.info("BRANCH API - COUNTRY RESTRICTIONS API REQUEST : {}", request);
+
+        List<CountryRestrictions> countryRestrictionsResponse =
+                countryRestrictionsRepository.findByCountryCode(request.getCountry());
+
+        return ApiResponse.builder()
+                .statusCode(StatusCode.SUCCESS.getStatusCode())
+                .message(StatusCode.SUCCESS.getMessage())
+                .data(countryRestrictionsResponse)
                 .build();
     }
 }

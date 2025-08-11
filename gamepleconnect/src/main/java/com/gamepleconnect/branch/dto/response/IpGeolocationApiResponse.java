@@ -13,6 +13,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class IpGeolocationApiResponse implements Serializable {
 
+    private static final String defaultCountryCode = "US";
+
     private String ip;
 
     private String country;
@@ -20,7 +22,7 @@ public class IpGeolocationApiResponse implements Serializable {
     public static IpGeolocationApiResponse defaultResponse(String ip) {
         return builder()
                 .ip(ip)
-                .country("US")
+                .country(defaultCountryCode)
                 .build();
     }
 }
