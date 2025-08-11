@@ -1,6 +1,7 @@
 package com.gamepleconnect.branch.controller;
 
 import com.gamepleconnect.branch.dto.request.CountryCodeGetRequest;
+import com.gamepleconnect.branch.dto.request.CountryRestrictionsRequest;
 import com.gamepleconnect.branch.service.BranchService;
 import com.gamepleconnect.common.response.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -20,5 +21,10 @@ public class BranchController {
     @GetMapping("/country/code")
     public ApiResponse getCountryCodeByIp(@ModelAttribute @Valid CountryCodeGetRequest request) {
         return branchService.getCountryCodeByIp(request);
+    }
+
+    @GetMapping("/country/restrictions")
+    public ApiResponse getRestrictionsByCountry(@ModelAttribute @Valid CountryRestrictionsRequest request) {
+        return branchService.getRestrictionsByCountry(request);
     }
 }

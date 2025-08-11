@@ -21,7 +21,7 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 .antMatchers("/promotion/pre-register").permitAll()
-                .antMatchers("/branch/country/code").permitAll()
+                .antMatchers("/branch/country/**").permitAll()
                 .anyRequest().authenticated();
 
         return httpSecurity.build();
