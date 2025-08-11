@@ -16,6 +16,6 @@ spring:
       config: classpath:ehcache.xml
 
 
-branch:
-  ip-geolocation:
-    api: https://api.country.is/
+external-api-url:
+  branch:
+    ip-geolocation: https://api.country.is/
