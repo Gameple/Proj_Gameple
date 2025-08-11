@@ -18,7 +18,7 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 public class BranchService {
 
-    @Value("${branch.ip-geolocation.api}")
+    @Value("${external-api-url.branch.ip-geolocation}")
     private String ipGeoLocationApiUri;
 
     private final RestTemplate restTemplate;
