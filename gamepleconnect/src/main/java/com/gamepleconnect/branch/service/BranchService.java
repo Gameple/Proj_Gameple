@@ -8,6 +8,9 @@ import com.gamepleconnect.branch.dto.response.IpGeolocationApiResponse;
 import com.gamepleconnect.branch.repository.restrictions.CountryRestrictionsRepository;
 import com.gamepleconnect.common.code.StatusCode;
 import com.gamepleconnect.common.response.ApiResponse;
+import com.gamepleconnect.root.game.domain.Game;
+import com.gamepleconnect.root.game.exception.GameNotFoundException;
+import com.gamepleconnect.root.game.repository.GameRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,6 +34,8 @@ public class BranchService {
     private final RestTemplate restTemplate;
 
     private final CountryRestrictionsRepository countryRestrictionsRepository;
+
+    private final GameRepository gameRepository;
 
     @Cacheable(value="branchGetCountryCodeCache", key = "#request")
     public ApiResponse getCountryCodeByIp(CountryCodeGetRequest request) {
@@ -63,8 +68,18 @@ public class BranchService {
 
         log.info("BRANCH API - COUNTRY RESTRICTIONS API REQUEST : {}", request);
 
+        if(gameRepository.findByGameCode(request.getGameCode()).isEmpty()) {
+            throw new GameNotFoundException();
+        }
+
+        CountryRestrictionsRequest normalizeRequest = CountryRestrictionsRequest.builder()
+                .countryCode(request.getCountryCode())
+                .languageCode(request.getLanguageCode())
+                .gameCode(request.getGameCode())
+                .build();
+
         List<CountryRestrictions> countryRestrictionsResponse =
-                countryRestrictionsRepository.findByCountryCode(request.getCountry());
+                countryRestrictionsRepository.findByCountryCodeAndLanguageCode(normalizeRequest);
 
         return ApiResponse.builder()
                 .statusCode(StatusCode.SUCCESS.getStatusCode())
