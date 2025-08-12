@@ -20,6 +20,9 @@ public class CountryRestrictions implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "game_code", nullable = false)
+    private Long gameCode;
+
     @Column(name = "country_code", length = 2, nullable = false)
     private String countryCode;
 
@@ -39,7 +42,8 @@ public class CountryRestrictions implements Serializable {
     private Date updatedAt;
 
     @Builder
-    public CountryRestrictions(String countryCode, String reasonCode, String reasonText, String languageCode) {
+    public CountryRestrictions(Long gameCode, String countryCode, String reasonCode, String reasonText, String languageCode) {
+        this.gameCode = gameCode;
         this.countryCode = countryCode;
         this.reasonCode = reasonCode;
         this.reasonText = reasonText;
