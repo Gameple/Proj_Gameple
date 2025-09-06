@@ -35,7 +35,7 @@ class BranchControllerTest {
 
     @Test
     @DisplayName("IP 기반 국가코드 조회 - 성공")
-    void test() throws Exception {
+    void test1() throws Exception {
 
         // US IP
         final String clientIp = "100.42.19.255";
@@ -55,7 +55,7 @@ class BranchControllerTest {
 
     @Test
     @DisplayName("IP 기반 국가코드 조회 - 실패(디폴트 응답)")
-    void test1() throws Exception {
+    void test2() throws Exception {
 
         final String clientIp = "127.0.0.1";
 
@@ -69,6 +69,28 @@ class BranchControllerTest {
                 .andExpect(jsonPath("$.statusCode").value("1"))
                 .andExpect(jsonPath("$.data.ip").value("127.0.0.1"))
                 .andExpect(jsonPath("$.data.country").value("US"))
+                .andDo(print());
+    }
+
+    @Test
+    @DisplayName("특정 국가 제한 여부 조회 - 성공")
+    void test3() throws Exception {
+
+        LinkedMultiValueMap<String, String> requestParam = new LinkedMultiValueMap<>();
+        requestParam.set("countryCode", "US");
+        requestParam.set("languageCode", "en");
+        requestParam.set("gameCode", "1");
+
+        mockMvc.perform(get("/branch/country/restrictions")
+                        .params(requestParam)
+                )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.statusCode").value("1"))
+                .andExpect(jsonPath("$.data[0].gameCode").value("1"))
+                .andExpect(jsonPath("$.data[0].countryCode").value("US"))
+                .andExpect(jsonPath("$.data[0].reasonCode").value("LEGAL_RESTRICTION"))
+                .andExpect(jsonPath("$.data[0].reasonText").value("Service is not available due to local regulations."))
+                .andExpect(jsonPath("$.data[0].languageCode").value("en"))
                 .andDo(print());
     }
 }
