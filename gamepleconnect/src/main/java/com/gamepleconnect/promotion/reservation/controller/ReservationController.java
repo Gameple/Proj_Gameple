@@ -1,12 +1,9 @@
 package com.gamepleconnect.promotion.reservation.controller;
 
 import com.gamepleconnect.common.response.ApiResponse;
-import com.gamepleconnect.promotion.reservation.dto.ReservationRequestDto;
+import com.gamepleconnect.promotion.reservation.dto.request.ReservationRequest;
 import com.gamepleconnect.promotion.reservation.service.ReservationService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +23,7 @@ public class ReservationController {
 
     @Operation(summary = "사전예약 등록 API", description = "사전예약 정보를 등록하는 API")
     @PostMapping("/pre-register")
-    public ApiResponse preRegister(@RequestBody @Valid ReservationRequestDto requestDto) throws Exception {
+    public ApiResponse preRegister(@RequestBody @Valid ReservationRequest requestDto) throws Exception {
         return reservationService.preRegister(requestDto);
     }
 }
