@@ -7,7 +7,6 @@ import com.gamepleconnect.branch.dto.request.CountryRestrictionsRequest;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import java.util.List;
-import java.util.Optional;
 
 public class CountryRestrictionsCustomRepositoryImpl implements CountryRestrictionsCustomRepository{
 

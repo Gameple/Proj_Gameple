@@ -8,13 +8,10 @@ import com.gamepleconnect.promotion.reservation.domain.DeviceOS;
 import com.gamepleconnect.promotion.reservation.domain.Reservation;
 import com.gamepleconnect.promotion.reservation.exception.DuplicatedEmailException;
 import com.gamepleconnect.promotion.reservation.repository.ReservationRepository;
-import com.gamepleconnect.promotion.reservation.dto.ReservationRequestDto;
+import com.gamepleconnect.promotion.reservation.dto.request.ReservationRequest;
 import com.gamepleconnect.root.game.domain.Game;
 import com.gamepleconnect.root.game.exception.GameNotFoundException;
 import com.gamepleconnect.root.game.repository.GameRepository;
-import com.gamepleconnect.root.language.domain.Language;
-import com.gamepleconnect.root.language.exception.LanguageNotFoundException;
-import com.gamepleconnect.root.language.repository.LanguageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -31,7 +28,7 @@ public class ReservationService {
     private final GameRepository gameRepository;
 
     @Transactional
-    public ApiResponse preRegister(ReservationRequestDto requestDto) throws Exception {
+    public ApiResponse preRegister(ReservationRequest requestDto) throws Exception {
 
         Game game = gameRepository.findByGameCode(requestDto.getGameCode())
                 .orElseThrow(GameNotFoundException::new);

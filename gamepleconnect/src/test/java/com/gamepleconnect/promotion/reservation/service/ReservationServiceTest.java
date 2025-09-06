@@ -6,7 +6,7 @@ import com.gamepleconnect.promotion.reservation.exception.DuplicatedEmailExcepti
 import com.gamepleconnect.root.game.domain.Game;
 import com.gamepleconnect.root.game.exception.GameNotFoundException;
 import com.gamepleconnect.root.game.repository.GameRepository;
-import com.gamepleconnect.promotion.reservation.dto.ReservationRequestDto;
+import com.gamepleconnect.promotion.reservation.dto.request.ReservationRequest;
 import com.gamepleconnect.promotion.reservation.repository.ReservationRepository;
 
 import org.junit.jupiter.api.*;
@@ -53,7 +53,7 @@ class ReservationServiceTest {
     @DisplayName("사전예약 정보 등록 - 성공")
     void test1() throws Exception {
 
-        ReservationRequestDto requestDto = ReservationRequestDto.builder()
+        ReservationRequest requestDto = ReservationRequest.builder()
                 .email("test@test.com")
                 .gameCode(1L)
                 .region("KR")
@@ -72,7 +72,7 @@ class ReservationServiceTest {
     @DisplayName("사전예약 정보 등록 - 실패 - 존재하지 않는 게임 정보")
     void test2() {
 
-        ReservationRequestDto requestDto = ReservationRequestDto.builder()
+        ReservationRequest requestDto = ReservationRequest.builder()
                 .email("test@test.com")
                 .gameCode(2L)
                 .region("KR")
@@ -90,7 +90,7 @@ class ReservationServiceTest {
     @DisplayName("사전예약 정보 등록 - 실패 - 이미 등록된 이메일 정보")
     void test4() throws Exception {
 
-        ReservationRequestDto firstRequestDto = ReservationRequestDto.builder()
+        ReservationRequest firstRequestDto = ReservationRequest.builder()
                 .email("test@test.com")
                 .gameCode(1L)
                 .region("KR")
@@ -101,7 +101,7 @@ class ReservationServiceTest {
 
         reservationService.preRegister(firstRequestDto);
 
-        ReservationRequestDto secondRequestDto = ReservationRequestDto.builder()
+        ReservationRequest secondRequestDto = ReservationRequest.builder()
                 .email("test@test.com")
                 .gameCode(1L)
                 .region("KR")

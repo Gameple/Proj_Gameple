@@ -4,8 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gamepleconnect.branch.dto.request.CountryCodeGetRequest;
 import com.gamepleconnect.branch.dto.response.IpGeolocationApiResponse;
 import com.gamepleconnect.common.response.ApiResponse;
-import com.gamepleconnect.promotion.reservation.domain.Reservation;
-import com.gamepleconnect.promotion.reservation.dto.ReservationRequestDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
