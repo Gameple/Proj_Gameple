@@ -8,20 +8,17 @@ import com.gamepleconnect.branch.dto.response.IpGeolocationApiResponse;
 import com.gamepleconnect.branch.repository.restrictions.CountryRestrictionsRepository;
 import com.gamepleconnect.common.code.StatusCode;
 import com.gamepleconnect.common.response.ApiResponse;
-import com.gamepleconnect.root.game.domain.Game;
 import com.gamepleconnect.root.game.exception.GameNotFoundException;
 import com.gamepleconnect.root.game.repository.GameRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

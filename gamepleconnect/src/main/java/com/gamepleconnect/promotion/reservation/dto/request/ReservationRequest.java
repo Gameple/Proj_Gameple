@@ -1,4 +1,4 @@
-package com.gamepleconnect.promotion.reservation.dto;
+package com.gamepleconnect.promotion.reservation.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Getter
-public class ReservationRequestDto {
+public class ReservationRequest {
 
     @Schema(description = "이메일" , example = "test@test.com")
     @Email()
@@ -35,7 +35,7 @@ public class ReservationRequestDto {
     private boolean promotionAgree;
 
     @Builder
-    public ReservationRequestDto(String email, Long gameCode, String region, String deviceOs, String deviceModel, boolean promotionAgree) {
+    public ReservationRequest(String email, Long gameCode, String region, String deviceOs, String deviceModel, boolean promotionAgree) {
         this.email = email;
         this.gameCode = gameCode;
         this.region = region;
