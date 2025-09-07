@@ -1,9 +1,11 @@
 package com.gamepleconnect.community.repository.faq;
 
 import com.gamepleconnect.community.dto.request.CommunityFaqRequest;
-import com.gamepleconnect.community.dto.response.CommunityFaqPageResponse;
+import com.gamepleconnect.community.dto.response.CommunityFaqResponse;
+
+import java.util.List;
 
 public interface CommunityFaqCustomRepository {
 
-    CommunityFaqPageResponse findByGameCodeAndLanguageCode(CommunityFaqRequest request);
+    List<CommunityFaqResponse> findByGameCodeAndLanguageCode(CommunityFaqRequest request);
 }
