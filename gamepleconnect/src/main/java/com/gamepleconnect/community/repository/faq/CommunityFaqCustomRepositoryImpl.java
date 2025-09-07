@@ -1,7 +1,6 @@
 package com.gamepleconnect.community.repository.faq;
 
 import com.gamepleconnect.community.dto.request.CommunityFaqRequest;
-import com.gamepleconnect.community.dto.response.CommunityFaqPageResponse;
 import com.gamepleconnect.community.dto.response.CommunityFaqResponse;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.data.jpa.repository.Query;
@@ -25,22 +24,9 @@ public class CommunityFaqCustomRepositoryImpl implements CommunityFaqCustomRepos
     }
 
     @Override
-    public CommunityFaqPageResponse findByGameCodeAndLanguageCode(CommunityFaqRequest request) {
-        String baseSql = "FROM gameple_community_faqs a " +
-                "JOIN gameple_community_faq_categories b ON a.category_id = b.id " +
-                "WHERE (:languageCode IS NULL OR a.language_code = :languageCode) " +
-                "AND (:gameCode IS NULL OR b.game_code = :gameCode) " +
-                "AND a.is_active = 1 ";
+    public List<CommunityFaqResponse> findByGameCodeAndLanguageCode(CommunityFaqRequest request) {
 
-        // 전체 카운트
-        String countSql = "SELECT COUNT(*) " + baseSql;
-        Long totalElements = ((Number) em.createNativeQuery(countSql)
-                .setParameter("languageCode", request.getLanguageCode())
-                .setParameter("gameCode", request.getGameCode())
-                .getSingleResult()).longValue();
-
-        // 데이터 쿼리
-        String dataSql = "SELECT " +
+        String sql = "SELECT " +
                 "b.id AS category_id, " +
                 "b.category_name, " +
                 "a.id AS faq_id, " +
@@ -48,21 +34,19 @@ public class CommunityFaqCustomRepositoryImpl implements CommunityFaqCustomRepos
                 "a.answer, " +
                 "a.created_at, " +
                 "a.updated_at " +
-                baseSql +
+                "FROM gameple_community_faqs a " +
+                "JOIN gameple_community_faq_categories b ON a.category_id = b.id " +
+                "WHERE (:languageCode IS NULL OR a.language_code = :languageCode) " +
+                "AND (:gameCode IS NULL OR b.game_code = :gameCode) " +
+                "AND a.is_active = 1 " +
                 "ORDER BY a.created_at DESC";
 
-        int page = (request.getPage() != null && request.getPage() > 0) ? request.getPage() : 1;
-        int size = (request.getSize() != null && request.getSize() > 0) ? request.getSize() : 10;
-        int offset = (page - 1) * size;
-
-        List<Object[]> results = em.createNativeQuery(dataSql)
+        List<Object[]> results = em.createNativeQuery(sql)
                 .setParameter("languageCode", request.getLanguageCode())
                 .setParameter("gameCode", request.getGameCode())
-                .setFirstResult(offset)
-                .setMaxResults(size)
                 .getResultList();
 
-        List<CommunityFaqResponse> content = new ArrayList<>();
+        List<CommunityFaqResponse> responseList = new ArrayList<>();
         for (Object[] row : results) {
             CommunityFaqResponse dto = new CommunityFaqResponse();
             dto.setCategoryId(((Number) row[0]).longValue());
@@ -72,15 +56,9 @@ public class CommunityFaqCustomRepositoryImpl implements CommunityFaqCustomRepos
             dto.setAnswer((String) row[4]);
             dto.setCreatedDate((Date) row[5]);
             dto.setUpdatedDate((Date) row[6]);
-            content.add(dto);
+            responseList.add(dto);
         }
 
-        // 응답 생성
-        CommunityFaqPageResponse response = new CommunityFaqPageResponse();
-        response.setCurrentPage(page);
-        response.setTotalPages((int) Math.ceil((double) totalElements / size));
-        response.setContent(content);
-
-        return response;
+        return responseList;
     }
 }
