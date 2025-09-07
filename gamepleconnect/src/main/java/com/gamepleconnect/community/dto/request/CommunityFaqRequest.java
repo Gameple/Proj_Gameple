@@ -15,10 +15,15 @@ public class CommunityFaqRequest {
     @NotBlank()
     private String languageCode;
 
+    private Integer page = 1;
+
+    private Integer size = 10;
 
     @Builder
     public CommunityFaqRequest(Long gameCode, String languageCode) {
         this.gameCode = gameCode;
         this.languageCode = languageCode;
+        this.page = page != null ? page : 1;
+        this.size = size != null ? size : 10;
     }
 }
