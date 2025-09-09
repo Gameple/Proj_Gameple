@@ -4,8 +4,6 @@ import com.gamepleconnect.community.dto.request.CommunityFaqRequest;
 import com.gamepleconnect.community.dto.response.CommunityFaqPageResponse;
 import com.gamepleconnect.community.dto.response.CommunityFaqResponse;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,18 +26,19 @@ public class CommunityFaqCustomRepositoryImpl implements CommunityFaqCustomRepos
     public CommunityFaqPageResponse findByGameCodeAndLanguageCode(CommunityFaqRequest request) {
         String baseSql = "FROM gameple_community_faqs a " +
                 "JOIN gameple_community_faq_categories b ON a.category_id = b.id " +
-                "WHERE (:languageCode IS NULL OR a.language_code = :languageCode) " +
-                "AND (:gameCode IS NULL OR b.game_code = :gameCode) " +
+                "WHERE a.language_code = :languageCode " +
+                "AND b.game_code = :gameCode " +
+                "AND (:categoryId IS NULL OR a.category_Id = :categoryId)" +
                 "AND a.is_active = 1 ";
 
-        // 전체 카운트
         String countSql = "SELECT COUNT(*) " + baseSql;
+
         Long totalElements = ((Number) em.createNativeQuery(countSql)
                 .setParameter("languageCode", request.getLanguageCode())
                 .setParameter("gameCode", request.getGameCode())
+                .setParameter("categoryId", request.getCategoryId())
                 .getSingleResult()).longValue();
 
-        // 데이터 쿼리
         String dataSql = "SELECT " +
                 "b.id AS category_id, " +
                 "b.category_name, " +
@@ -58,6 +57,7 @@ public class CommunityFaqCustomRepositoryImpl implements CommunityFaqCustomRepos
         List<Object[]> results = em.createNativeQuery(dataSql)
                 .setParameter("languageCode", request.getLanguageCode())
                 .setParameter("gameCode", request.getGameCode())
+                .setParameter("categoryId", request.getCategoryId())
                 .setFirstResult(offset)
                 .setMaxResults(size)
                 .getResultList();
@@ -75,7 +75,6 @@ public class CommunityFaqCustomRepositoryImpl implements CommunityFaqCustomRepos
             content.add(dto);
         }
 
-        // 응답 생성
         CommunityFaqPageResponse response = new CommunityFaqPageResponse();
         response.setCurrentPage(page);
         response.setTotalPages((int) Math.ceil((double) totalElements / size));
