@@ -15,6 +15,8 @@ public class CommunityFaqRequest {
     @NotBlank()
     private String languageCode;
 
+    private Long categoryId;
+
     private Integer page = 1;
 
     private Integer size = 10;
