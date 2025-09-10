@@ -1,7 +1,9 @@
 package com.gamepleconnect.branch.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gamepleconnect.branch.domain.CountryRestrictions;
 import com.gamepleconnect.branch.dto.request.CountryCodeGetRequest;
+import com.gamepleconnect.branch.dto.request.CountryRestrictionsRequest;
 import com.gamepleconnect.branch.dto.response.IpGeolocationApiResponse;
 import com.gamepleconnect.common.response.ApiResponse;
 import org.junit.jupiter.api.DisplayName;
@@ -9,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.core.AutoConfigureCache;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -34,10 +38,10 @@ class BranchServiceTest {
                 .ip(clientIp)
                 .build();
 
-        ApiResponse apiResponse = branchService.getCountryCodeByIp(request);
-        IpGeolocationApiResponse apiResponseData = objectMapper.convertValue(apiResponse.getData(), IpGeolocationApiResponse.class);
+        ApiResponse response = branchService.getCountryCodeByIp(request);
+        IpGeolocationApiResponse apiResponseData = objectMapper.convertValue(response.getData(), IpGeolocationApiResponse.class);
 
-        assertEquals("1", apiResponse.getStatusCode());
+        assertEquals("1", response.getStatusCode());
         assertEquals("100.42.19.255", apiResponseData.getIp());
         assertEquals("US", apiResponseData.getCountry());
     }
@@ -52,11 +56,33 @@ class BranchServiceTest {
                 .ip(clientIp)
                 .build();
 
-        ApiResponse apiResponse = branchService.getCountryCodeByIp(request);
-        IpGeolocationApiResponse apiResponseData = objectMapper.convertValue(apiResponse.getData(), IpGeolocationApiResponse.class);
+        ApiResponse response = branchService.getCountryCodeByIp(request);
+        IpGeolocationApiResponse apiResponseData = objectMapper.convertValue(response.getData(), IpGeolocationApiResponse.class);
 
-        assertEquals("1", apiResponse.getStatusCode());
+        assertEquals("1", response.getStatusCode());
         assertEquals("127.0.0.1", apiResponseData.getIp());
         assertEquals("US", apiResponseData.getCountry());
+    }
+
+    @Test
+    @DisplayName("특정 국가 제한 여부 조회 - 데이터 O")
+    void test3() {
+
+        CountryRestrictionsRequest request = CountryRestrictionsRequest.builder()
+                .gameCode(1)
+                .languageCode("ko")
+                .countryCode("KR")
+                .build();
+
+        ApiResponse response = branchService.getRestrictionsByCountry(request);
+        List<CountryRestrictions> dataList = (List<CountryRestrictions>) response.getData();
+
+        assertEquals("1", response.getStatusCode());
+        assertEquals("OK", response.getMessage());
+        assertEquals(1, dataList.get(0).getGameCode());
+        assertEquals("KR", dataList.get(0).getCountryCode());
+        assertEquals("AGE_LIMIT", dataList.get(0).getReasonCode());
+        assertEquals("만 18세 이상만 이용 가능합니다.", dataList.get(0).getReasonText());
+        assertEquals("ko", dataList.get(0).getLanguageCode());
     }
 }
