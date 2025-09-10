@@ -9,12 +9,9 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
-    hibernate:
-      ddl-auto: update
   cache:
     ehcache:
       config: classpath:ehcache.xml
-
 
 external-api-url:
   branch:
