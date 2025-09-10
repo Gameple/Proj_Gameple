@@ -11,7 +11,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.LinkedMultiValueMap;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -69,7 +68,7 @@ class BranchControllerTest {
     }
 
     @Test
-    @DisplayName("특정 국가 제한 여부 조회 - 성공")
+    @DisplayName("특정 국가 제한 여부 조회 - 데이터 0")
     void test3() throws Exception {
 
         LinkedMultiValueMap<String, String> requestParam = new LinkedMultiValueMap<>();
