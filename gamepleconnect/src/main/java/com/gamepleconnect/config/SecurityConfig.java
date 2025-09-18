@@ -27,6 +27,7 @@ public class SecurityConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                .antMatchers("/h2-console").permitAll()
                 .antMatchers("/promotion/pre-register").permitAll()
                 .antMatchers("/branch/country/**").permitAll()
                 .antMatchers("/community/**").permitAll()
