@@ -2,6 +2,7 @@ package com.gamepleconnect.promotion.reservation.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.gamepleconnect.common.code.StatusCode;
 import com.gamepleconnect.promotion.reservation.dto.request.ReservationRequest;
 import com.gamepleconnect.promotion.reservation.repository.ReservationRepository;
 import com.gamepleconnect.root.game.domain.Game;
@@ -103,8 +104,8 @@ class ReservationControllerTest {
                         .content(json)
                 )
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.statusCode").value("-5"))
-                .andExpect(jsonPath("$.message").value("GAME_NOT_FOUND"))
+                .andExpect(jsonPath("$.statusCode").value(StatusCode.GAME_NOT_FOUND.getStatusCode()))
+                .andExpect(jsonPath("$.message").value(StatusCode.GAME_NOT_FOUND.getMessage()))
                 .andExpect(jsonPath("$.data").isEmpty())
                 .andDo(print());
     }
@@ -137,8 +138,8 @@ class ReservationControllerTest {
                         .content(json)
                 )
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.statusCode").value("-7"))
-                .andExpect(jsonPath("$.message").value("ALREADY_EXISTS_EMAIL"))
+                .andExpect(jsonPath("$.statusCode").value(StatusCode.EMAIL_DUPLICATED.getStatusCode()))
+                .andExpect(jsonPath("$.message").value(StatusCode.EMAIL_DUPLICATED.getMessage()))
                 .andExpect(jsonPath("$.data").isEmpty())
                 .andDo(print());
     }

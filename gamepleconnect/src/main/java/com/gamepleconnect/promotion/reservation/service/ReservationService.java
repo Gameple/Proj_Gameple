@@ -6,7 +6,7 @@ import com.gamepleconnect.common.security.AES256;
 import com.gamepleconnect.common.util.CommonUtil;
 import com.gamepleconnect.promotion.reservation.domain.DeviceOS;
 import com.gamepleconnect.promotion.reservation.domain.Reservation;
-import com.gamepleconnect.promotion.reservation.exception.DuplicatedEmailException;
+import com.gamepleconnect.exception.common.DuplicatedEmailException;
 import com.gamepleconnect.promotion.reservation.repository.ReservationRepository;
 import com.gamepleconnect.promotion.reservation.dto.request.ReservationRequest;
 import com.gamepleconnect.root.game.domain.Game;
