@@ -2,6 +2,8 @@ package com.gamepleconnect.user.service;
 
 import com.gamepleconnect.common.code.StatusCode;
 import com.gamepleconnect.common.response.ApiResponse;
+import com.gamepleconnect.common.security.AES256;
+import com.gamepleconnect.common.util.CommonUtil;
 import com.gamepleconnect.exception.common.DuplicatedEmailException;
 import com.gamepleconnect.user.domain.SignUpType;
 import com.gamepleconnect.user.domain.User;
@@ -22,7 +24,7 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
 
-    public ApiResponse SignUpOnLocal(UserSignUpRequest request) {
+    public ApiResponse SignUpOnLocal(UserSignUpRequest request) throws Exception {
 
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new DuplicatedEmailException();
@@ -38,6 +40,7 @@ public class UserService {
                 .passwordHash(passwordEncoder.encode(request.getPassword()))
                 .signupType(SignUpType.LOCAL)
                 .profileImageUrl(request.getProfileImageUrl())
+                .createdIp(AES256.encrypt(CommonUtil.getIp()))
                 .build();
 
         userRepository.save(user);
