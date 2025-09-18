@@ -2,7 +2,7 @@ package com.gamepleconnect.promotion.reservation.service;
 
 import com.gamepleconnect.common.security.AES256;
 import com.gamepleconnect.promotion.reservation.domain.Reservation;
-import com.gamepleconnect.promotion.reservation.exception.DuplicatedEmailException;
+import com.gamepleconnect.exception.common.DuplicatedEmailException;
 import com.gamepleconnect.root.game.domain.Game;
 import com.gamepleconnect.root.game.exception.GameNotFoundException;
 import com.gamepleconnect.root.game.repository.GameRepository;

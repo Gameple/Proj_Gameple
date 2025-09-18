@@ -2,9 +2,10 @@ package com.gamepleconnect.exception.controller;
 
 import com.gamepleconnect.common.code.StatusCode;
 import com.gamepleconnect.common.response.ApiResponse;
-import com.gamepleconnect.promotion.reservation.exception.DuplicatedEmailException;
+import com.gamepleconnect.exception.common.DuplicatedEmailException;
 import com.gamepleconnect.root.game.exception.GameNotFoundException;
 import com.gamepleconnect.root.language.exception.LanguageNotFoundException;
+import com.gamepleconnect.user.exception.DuplicatedUserNameException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -64,6 +65,17 @@ public class ExceptionController {
     @ExceptionHandler(DuplicatedEmailException.class)
     @ResponseBody
     public ApiResponse invaildRequestHandler(DuplicatedEmailException e) {
+        return ApiResponse.builder()
+                .statusCode(e.getMessage())
+                .message(e.getCustomMessage())
+                .data(null)
+                .build();
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @ExceptionHandler(DuplicatedUserNameException.class)
+    @ResponseBody
+    public ApiResponse invaildRequestHandler(DuplicatedUserNameException e) {
         return ApiResponse.builder()
                 .statusCode(e.getMessage())
                 .message(e.getCustomMessage())
