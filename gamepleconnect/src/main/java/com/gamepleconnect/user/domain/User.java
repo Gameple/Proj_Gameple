@@ -42,6 +42,9 @@ public class User {
     @ColumnDefault("1")
     private Boolean emailVerified;
 
+    @Column(name = "created_ip", length = 50, nullable = false)
+    private String createdIp;
+
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -53,11 +56,12 @@ public class User {
     private Date updatedAt;
 
     @Builder
-    public User(String email, String userName, String passwordHash, SignUpType signupType, String profileImageUrl) {
+    public User(String email, String userName, String passwordHash, SignUpType signupType, String profileImageUrl, String createdIp) {
         this.email = email;
         this.userName = userName;
         this.passwordHash = passwordHash;
         this.signupType = signupType;
         this.profileImageUrl = profileImageUrl;
+        this.createdIp = createdIp;
     }
 }
