@@ -77,8 +77,8 @@ class ReservationControllerTest {
                         .content(json)
                 )
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.statusCode").value("1"))
-                .andExpect(jsonPath("$.message").value("OK"))
+                .andExpect(jsonPath("$.statusCode").value(StatusCode.SUCCESS.getStatusCode()))
+                .andExpect(jsonPath("$.message").value(StatusCode.SUCCESS.getMessage()))
                 .andExpect(jsonPath("$.data").isEmpty())
                 .andDo(print());
     }
@@ -159,8 +159,8 @@ class ReservationControllerTest {
                         .content(json)
                 )
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.statusCode").value("-1"))
-                .andExpect(jsonPath("$.message").value("BAD_REQUEST"))
+                .andExpect(jsonPath("$.statusCode").value(StatusCode.BAD_REQUEST.getStatusCode()))
+                .andExpect(jsonPath("$.message").value(StatusCode.BAD_REQUEST.getMessage()))
                 .andExpect(jsonPath("$.data").isEmpty())
                 .andDo(print());
     }
