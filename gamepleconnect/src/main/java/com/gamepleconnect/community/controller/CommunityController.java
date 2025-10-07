@@ -2,6 +2,7 @@ package com.gamepleconnect.community.controller;
 
 import com.gamepleconnect.common.response.ApiResponse;
 import com.gamepleconnect.community.dto.request.CommunityFaqRequest;
+import com.gamepleconnect.community.dto.response.CommunityFaqPageResponse;
 import com.gamepleconnect.community.service.faq.CommunityFaqService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ public class CommunityController {
     private final CommunityFaqService communityFaqService;
 
     @GetMapping("/faqs")
-    public ApiResponse getCommunityFaqs(@ModelAttribute @Valid CommunityFaqRequest request) {
+    public ApiResponse<CommunityFaqPageResponse> getCommunityFaqs(@ModelAttribute @Valid CommunityFaqRequest request) {
         return communityFaqService.getCommunityFaq(request);
     }
 }

@@ -35,7 +35,7 @@ public class BranchService {
     private final GameRepository gameRepository;
 
     @Cacheable(value="branchGetCountryCodeCache", key = "#request")
-    public ApiResponse getCountryCodeByIp(CountryCodeGetRequest request) {
+    public ApiResponse<IpGeolocationApiResponse> getCountryCodeByIp(CountryCodeGetRequest request) {
 
         log.info("BRANCH API - IP GEOLOCATION API REQUEST : {}", request);
 
@@ -53,7 +53,7 @@ public class BranchService {
             log.warn("BRANCH API - IP GEOLOCATION API ERROR REQUEST: {}", request);
         }
 
-        return ApiResponse.builder()
+        return ApiResponse.<IpGeolocationApiResponse>builder()
                 .statusCode(StatusCode.SUCCESS.getStatusCode())
                 .message(StatusCode.SUCCESS.getMessage())
                 .data(ipGeolocationApiResponse)
@@ -61,7 +61,7 @@ public class BranchService {
     }
 
     @Cacheable(value="branchGetCountryRestrictionsCache", key = "#request")
-    public ApiResponse getRestrictionsByCountry(CountryRestrictionsRequest request) {
+    public ApiResponse<List<CountryRestrictions>> getRestrictionsByCountry(CountryRestrictionsRequest request) {
 
         log.info("BRANCH API - COUNTRY RESTRICTIONS API REQUEST : {}", request);
 
@@ -78,7 +78,7 @@ public class BranchService {
         List<CountryRestrictions> countryRestrictionsResponse =
                 countryRestrictionsRepository.findByCountryCodeAndLanguageCode(normalizeRequest);
 
-        return ApiResponse.builder()
+        return ApiResponse.<List<CountryRestrictions>>builder()
                 .statusCode(StatusCode.SUCCESS.getStatusCode())
                 .message(StatusCode.SUCCESS.getMessage())
                 .data(countryRestrictionsResponse)

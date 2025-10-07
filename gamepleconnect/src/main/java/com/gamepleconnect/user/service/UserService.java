@@ -24,7 +24,7 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
 
-    public ApiResponse SignUpOnLocal(UserSignUpRequest request) throws Exception {
+    public ApiResponse<Void> SignUpOnLocal(UserSignUpRequest request) throws Exception {
 
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new DuplicatedEmailException();
@@ -45,7 +45,7 @@ public class UserService {
 
         userRepository.save(user);
 
-        return ApiResponse.builder()
+        return ApiResponse.<Void>builder()
                 .statusCode(StatusCode.SUCCESS.getStatusCode())
                 .message(StatusCode.SUCCESS.getMessage())
                 .data(null)
