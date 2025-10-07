@@ -7,7 +7,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 @Data
-public class ApiResponse implements Serializable {
+public class ApiResponse<T> implements Serializable {
 
     @Schema(description = "서버 정의 상태코드" , example = "1")
     private String statusCode;
@@ -16,10 +16,10 @@ public class ApiResponse implements Serializable {
     private String message;
 
     @Schema(description = "데이터")
-    private Object data;
+    private T data;
 
     @Builder
-    public ApiResponse(String statusCode, String message, Object data) {
+    public ApiResponse(String statusCode, String message, T data) {
         this.statusCode = statusCode;
         this.message = message;
         this.data = data;

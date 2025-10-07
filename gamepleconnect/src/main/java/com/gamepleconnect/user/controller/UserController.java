@@ -23,7 +23,7 @@ public class UserController {
 
     @Operation(summary = "회원가입 API", description = "게임플 로컬 회원가입 API")
     @PostMapping("/sign-up")
-    public ApiResponse SignUpOnLocal(@RequestBody @Valid UserSignUpRequest request) throws Exception {
+    public ApiResponse<Void> SignUpOnLocal(@RequestBody @Valid UserSignUpRequest request) throws Exception {
         return userService.SignUpOnLocal(request);
     }
 
