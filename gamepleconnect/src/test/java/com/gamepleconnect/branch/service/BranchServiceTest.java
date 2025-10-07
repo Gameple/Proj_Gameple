@@ -114,8 +114,8 @@ class BranchServiceTest {
                 .countryCode("KR")
                 .build();
 
-        ApiResponse response = branchService.getRestrictionsByCountry(request);
-        List<CountryRestrictions> dataList = (List<CountryRestrictions>) response.getData();
+        ApiResponse<List<CountryRestrictions>> response = branchService.getRestrictionsByCountry(request);
+        List<CountryRestrictions> dataList = response.getData();
 
         assertEquals(StatusCode.SUCCESS.getStatusCode(), response.getStatusCode());
         assertEquals(1, dataList.get(0).getGameCode());
