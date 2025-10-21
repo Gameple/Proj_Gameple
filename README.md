@@ -13,6 +13,6 @@
 
 ---
 
-## 🔄 개발 플로우
-개발 과정 및 아키텍처 설계는 아래 블로그에서 확인하실 수 있습니다:  
-👉 [개발 플로우 상세 보기](https://doshisha.tistory.com/category/Project/Gameple)
+## 🔄 Gample API
+**[Gameple Core](https://github.com/Gameple/core.gameple.com)** 
+**[Gameple Shop](https://github.com/Gameple/shop.gameple.com)** 
